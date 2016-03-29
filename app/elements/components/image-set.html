@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="image-set">
+  
+  <style>
+      .listing-wrapper {
+        color:white;
+        display: flex;
+        padding: 4px;
+      }
+      .listing-wrapper img{
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+      }
+
+      .listing-wrapper span {
+        padding: 2;
+        float:left;
+        line height: 1px;
+      }
+  </style>
+
+  <template>
+    	<div class="user-panel">
+               <div class="pull-left image">
+                  <img src={{image_url}} alt="User Image">
+               </div>
+               <div class="pull-left info">
+                  <p>{{name}}</p>
+                  <p>W:{{thumb_width}} &nbsp;&nbsp; H:{{thumb_height}}</p>
+               </div>
+            </div>
+        </div>  
+  </template>
+
+</dom-module>
+
+<script>
+    Polymer({
+      is: 'image-set',
+      properties: {
+        name: String,
+        image_url: String
+      }
+
+    });
+</script>
