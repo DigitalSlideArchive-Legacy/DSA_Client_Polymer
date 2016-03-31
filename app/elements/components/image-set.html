@@ -19,16 +19,20 @@
         float:left;
         line height: 1px;
       }
+
+      li {
+      	font-size: 12px;
+      }
   </style>
 
   <template>
     	<div class="user-panel">
                <div class="pull-left image">
-                  <img src={{image_url}} alt="User Image">
+                  <img src={{image_url}} alt="Thumb Image">
                </div>
                <div class="pull-left info">
-                  <p>{{name}}</p>
-                  <p>W:{{thumb_width}} &nbsp;&nbsp; H:{{thumb_height}}</p>
+                  <li>{{name}}</li>
+                  <li>W:{{thumb_width}} &nbsp;&nbsp; H:{{thumb_height}}</li>
                </div>
             </div>
         </div>  
@@ -41,8 +45,23 @@
       is: 'image-set',
       properties: {
         name: String,
-        image_url: String
-      }
+        image_url: String,
+        whole_image_url: String
+      },
+      listeners: {
+        'tap': 'regularTap',
+        'special.tap': 'specialTap'
+      },
 
+      regularTap: function(e) {
+        //alert("image_set:"+this.whole_image_url);
+        this.fire('image-click', {
+            imgset_whole_image_url: this.whole_image_url
+        });
+      },
+
+      specialTap: function(e) {
+        alert("It was special tapping");
+      }
     });
 </script>

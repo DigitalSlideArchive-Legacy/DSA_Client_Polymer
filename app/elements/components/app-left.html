@@ -18,15 +18,12 @@
       --paper-input-container-label: {
       color:orange;
       }
-      li + li {
-      border-top: solid 1px #666;
-      }
       paper-tabs {
       width: 400px;
       }
       paper-dropdown-menu {
       color: white;
-      width: 200px;
+      width: 100%;
       }
       .div-internal-scroll {
       overflow-y: scroll;
@@ -75,7 +72,7 @@
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-              <li class="treeview">
+              <ul>
                   <paper-dropdown-menu label="Data Set">
                      <paper-listbox class="dropdown-content" selected="{{studyIDidx}}">
                         <template is="dom-repeat" items="[[datasets]]" as="dataset" >
@@ -83,7 +80,7 @@
                         </template>
                      </paper-listbox>
                   </paper-dropdown-menu>
-               </li>
+               </ul>
                <li class="header">IMAGE SETS</li>
                <li class="treeview">
                <form action="#" method="get" class="sidebar-form">
@@ -100,7 +97,10 @@
                   <image-set name="{{item.slide_name}}" 
                             image_url="{{item.thumbnail_image}}" 
                             thumb_width="{{item.image_width}}" 
-                            thumb_width="{{item.image_height}}"></image-set>
+                            thumb_height="{{item.image_height}}"
+                            whole_image_url="{{item.slide_url}}"
+                            on-image-click = selectedImageToLoad>
+                  </image-set>
                </template>
              </li>  
             </ul>
@@ -124,15 +124,22 @@
        },
      },
      computeUrl: function(studyIDidx) {
-      console.log(studyIDidx);
+      //console.log(studyIDidx);
       if(studyIDidx>=0){
        var dataset = this.datasets[studyIDidx];
-       console.log(['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/'));
+       //console.log(['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/'));
        return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/');
        //return ['https://isic-archive.com/api/v1/study', dataset._id,'images/'].join('/');
       }
       return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides'].join('/');
       //return ['https://isic-archive.com/api/v1/study', '','images/'].join('/');
+     },
+
+     selectedImageToLoad: function(e) {
+      //alert("app_left:"+e.detail.imgset_whole_image_url);
+      this.fire('image-click', {
+            appleft_whole_image_url: e.detail.imgset_whole_image_url
+        });
      },
      _filter: function(val) {  
        return function(item) {

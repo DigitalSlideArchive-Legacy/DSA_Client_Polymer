@@ -4,12 +4,23 @@
    <style>
    </style>
    <template>
-   	  <app-viewer></app-viewer>
-      <app-left></app-left>
+   	  <app-viewer whole_image_url="{{whole_image_url}}"></app-viewer>
+      <app-left on-image-click = selectedImageToLoad></app-left>
    </template>
 </dom-module>
 <script>
    Polymer({
-     is: 'app-workspace'
+     is: 'app-workspace',
+     properties: {
+        whole_image_url: String
+      },
+     selectedImageToLoad: function(e) {
+      //alert("workspace: "+e.detail.appleft_whole_image_url);
+      //this.whole_image_url = e.detail.appleft_whole_image_url;
+        this.fire('image-click', {
+            workspace_whole_image_url: e.detail.appleft_whole_image_url
+        });
+
+     }
    });
 </script>

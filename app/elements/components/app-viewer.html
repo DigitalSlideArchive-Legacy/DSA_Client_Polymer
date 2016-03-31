@@ -37,6 +37,20 @@
 </dom-module>
 <script>
    Polymer({
-     is: 'app-viewer'
+     is: 'app-viewer',
+     properties: {
+        whole_image_url: {
+          type: String,
+          observer: '_valueChanged'
+        }
+      },
+      _valueChanged: function() {
+        //alert("Viewer:"+this.whole_image_url);
+        if(this.whole_image_url) {
+          alert("Viewer:"+this.whole_image_url);
+          //dg_viewer.open(this.whole_image_url);
+        }
+        //console.log(this.whole_image_url);
+      }
    });
 </script>

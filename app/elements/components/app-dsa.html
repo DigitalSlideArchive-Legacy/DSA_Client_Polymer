@@ -4,7 +4,7 @@
    </style>
    <template>
    	   <app-header></app-header>
-   	   <app-workspace></app-workspace>
+   	   <app-workspace on-image-click = selectedImageToLoad></app-workspace>
 	   <app-footer></app-footer>
 	   <app-controlsidebar></app-controlsidebar>
    </template>
@@ -13,8 +13,11 @@
    Polymer({
      is: 'app-dsa',
 
+    properties: {
+        dg_viewer : Object
+    },
      ready: function() {
-       var dg_viewer = OpenSeadragon({
+       this.dg_viewer = OpenSeadragon({
             id: "openseadragon1",
             prefixUrl: "images/openseadragon-bin-2.0.0/images/",
             showNavigator: true,
@@ -23,12 +26,13 @@
 
        //dg_viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
 
+/*
       //https://isic-archive.com/api/v1/image/54e755f8bae47850e86ce012 
       isic_image = 'https://isic-archive.com/api/v1/image/54e755f8bae47850e86ce012'
       base_url = `https://isic-archive.com/api/v1/image/${isic_image}/`;
       image_filename_url = base_url + 'download?contentDisposition=inline&.jpg' //Please note this hack, without the .jpg osd couldn't read
 
-    new_tile_source = {
+        new_tile_source = {
             'type': 'legacy-image-pyramid',
             levels: [{
                 'url': image_filename_url,
@@ -36,12 +40,21 @@
             }]
         }
         
-//'height': image_metadata.meta.acquisition.pixelsY,
+      //'height': image_metadata.meta.acquisition.pixelsY,
                 //'width': image_metadata.meta.acquisition.pixelsX,
         //update_rater_overlays(image_name);  <<TO DOO!!!!
-    dg_viewer.open(new_tile_source);
+    this.dg_viewer.open(new_tile_source);
+*/
+      },
+      selectedImageToLoad: function(e) {
 
-      }
+        if(e.detail.workspace_whole_image_url)
+        { 
+          //alert("DSA: "+e.detail.workspace_whole_image_url);
+          this.dg_viewer.open(e.detail.workspace_whole_image_url);
+        }
+      
+     }
 
    });
 </script>
