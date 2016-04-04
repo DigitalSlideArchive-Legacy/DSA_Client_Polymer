@@ -10,143 +10,128 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <dom-module id="app-left">
-   <style>
-      :host {
-      display: block;
-      height: 200px;
-      --primary-text-color: gray;
-      --paper-input-container-label: {
-      color:orange;
-      }
-      paper-tabs {
-      width: 400px;
-      }
-      paper-dropdown-menu {
-      color: white;
-      width: 100%;
-      }
-      .div-internal-scroll {
-      overflow-y: scroll;
-      height: 100%;
-      }
-      }
-   </style>
-   <template>
-      <!--
+    <style>
+    :host {
+        display: block;
+        --primary-text-color: gray;
+        --paper-input-container-label: {
+            color: orange;
+        }
+        paper-tabs {
+            width: 400px;
+        }
+        paper-dropdown-menu {
+            color: white;
+            width: 100%;
+        }
+        .div-internal-scroll {
+            overflow-y: scroll;
+            height: 100%;
+        }
+    }
+    </style>
+    <template>
+        <!--
         DSA LINK: http://cancer.digitalslidearchive.emory.edu/api/v2/collections
         DSA IMAGESETS LINK : http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides/lgg
         ISIC LINK: https://isic-archive.com/api/v1/study
       -->
-      <iron-ajax
-         auto
-         url="http://cancer.digitalslidearchive.emory.edu/api/v2/collections"
-         handle-as="json"
-         last-response="{{datasets}}"
-         ></iron-ajax>
-      <!-- <iron-ajax
+        <iron-ajax auto url="http://cancer.digitalslidearchive.emory.edu/api/v2/collections" handle-as="json" last-response="{{datasets}}"></iron-ajax>
+        <!-- <iron-ajax
          auto
          url="https://isic-archive.com/api/v1/study/55c405419fc3c151ac90bfb6/images/"
          handle-as="json"
          last-response="{{imagesets}}"
          ></iron-ajax>
          -->
-      <iron-ajax
-         auto
-         url="{{url}}"
-         handle-as="json"
-         last-response="{{imagesets}}"
-         ></iron-ajax>
-      <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
-         <!-- sidebar: style can be found in sidebar.less -->
-         <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-               <div class="pull-left image">
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-               </div>
-               <div class="pull-left info">
-                  <p>Maria Juarez</p>
-                  <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-               </div>
-            </div>
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-              <ul>
-                  <paper-dropdown-menu label="Data Set">
-                     <paper-listbox class="dropdown-content" selected="{{studyIDidx}}">
-                        <template is="dom-repeat" items="[[datasets]]" as="dataset" >
-                           <paper-item value="{{dataset._id}}">{{dataset.collection_name}}</paper-item>
-                        </template>
-                     </paper-listbox>
-                  </paper-dropdown-menu>
-               </ul>
-               <li class="header">IMAGE SETS</li>
-               <li class="treeview">
-               <form action="#" method="get" class="sidebar-form">
-                  <div class="input-group">
-                     <input type="text" name="q" class="form-control" placeholder="Search..." value="{{filterVal::input}}">
-                     <span class="input-group-btn">
+        <iron-ajax auto url="{{url}}" handle-as="json" last-response="{{imagesets}}"></iron-ajax>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>Maria Juarez</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <ul>
+                        <paper-dropdown-menu label="Data Set">
+                            <paper-listbox class="dropdown-content" selected="{{studyIDidx}}">
+                                <template is="dom-repeat" items="[[datasets]]" as="dataset">
+                                    <paper-item value="{{dataset._id}}">{{dataset.collection_name}}</paper-item>
+                                </template>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </ul>
+                    <li class="header">IMAGE SETS</li>
+                    <li>
+                        <form action="#" method="get" class="sidebar-form">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search..." value="{{filterVal::input}}">
+                                <span class="input-group-btn">
                      <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
                      </span>
-                  </div>
-               </form>
-             </li>
-             <li class="treeview">
-               <template is="dom-repeat" items="{{imagesets}}" filter="{{_filter(filterVal)}}">
-                  <image-set name="{{item.slide_name}}" 
-                            image_url="{{item.thumbnail_image}}" 
-                            thumb_width="{{item.image_width}}" 
-                            thumb_height="{{item.image_height}}"
-                            whole_image_url="{{item.slide_url}}"
-                            on-image-click = selectedImageToLoad>
-                  </image-set>
-               </template>
-             </li>  
-            </ul>
-         </section>
-         <!-- /.sidebar -->
-      </aside>
-   </template>
+                            </div>
+                        </form>
+                    </li>
+                    <li style="width: 100%; height:100%; overflow: scroll;">
+                        <template is="dom-repeat" items="{{imagesets}}" filter="{{_filter(filterVal)}}">
+                            <image-set name="{{item.slide_name}}" image_url="{{item.thumbnail_image}}" thumb_width="{{item.image_width}}" thumb_height="{{item.image_height}}" whole_image_url="{{item.slide_url}}" 
+                            on-image-click=selectedImageToLoad>
+                            </image-set>
+                        </template>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+    </template>
 </dom-module>
 <script>
-   Polymer({
-     is: 'app-left',
-     properties: {
-      datasets: [],
-      imagesets: [],
-       studyIDidx: {
-         value: '-1',
-         notify: true
-       },
-       url: {
-         computed: 'computeUrl(studyIDidx)'
-       },
-     },
-     computeUrl: function(studyIDidx) {
-      //console.log(studyIDidx);
-      if(studyIDidx>=0){
-       var dataset = this.datasets[studyIDidx];
-       //console.log(['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/'));
-       return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/');
-       //return ['https://isic-archive.com/api/v1/study', dataset._id,'images/'].join('/');
-      }
-      return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides'].join('/');
-      //return ['https://isic-archive.com/api/v1/study', '','images/'].join('/');
-     },
+Polymer({
+    is: 'app-left',
+    properties: {
+        datasets: [],
+        imagesets: [],
+        studyIDidx: {
+            value: '-1',
+            notify: true
+        },
+        url: {
+            computed: 'computeUrl(studyIDidx)'
+        },
+    },
+    computeUrl: function(studyIDidx) {
+        //console.log(studyIDidx);
+        if (studyIDidx >= 0) {
+            var dataset = this.datasets[studyIDidx];
+            //console.log(['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/'));
+            return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/');
+            //return ['https://isic-archive.com/api/v1/study', dataset._id,'images/'].join('/');
+        }
+        return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides'].join('/');
+        //return ['https://isic-archive.com/api/v1/study', '','images/'].join('/');
+    },
 
-     selectedImageToLoad: function(e) {
-      //alert("app_left:"+e.detail.imgset_whole_image_url);
-      this.fire('image-click', {
+    selectedImageToLoad: function(e) {
+        //alert("app_left:"+e.detail.imgset_whole_image_url);
+        this.fire('image-click', {
             appleft_whole_image_url: e.detail.imgset_whole_image_url
         });
-     },
-     _filter: function(val) {  
-       return function(item) {
-         if (!val) return true;
-         if (!item) return false;
-         return (item.slide_name  && ~item.slide_name.toLowerCase().indexOf(val.toLowerCase()));
-       };
-     }
-   });
+    },
+    _filter: function(val) {
+        return function(item) {
+            if (!val) return true;
+            if (!item) return false;
+            return (item.slide_name && ~item.slide_name.toLowerCase().indexOf(val.toLowerCase()));
+        };
+    }
+});
 </script>

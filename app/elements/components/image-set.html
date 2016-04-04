@@ -1,67 +1,64 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
 <dom-module id="image-set">
-  
-  <style>
-      .listing-wrapper {
-        color:white;
+    <style>
+    .listing-wrapper {
+        color: white;
         display: flex;
         padding: 4px;
-      }
-      .listing-wrapper img{
+    }
+    
+    .listing-wrapper img {
         border-radius: 50%;
         width: 48px;
         height: 48px;
-      }
-
-      .listing-wrapper span {
+    }
+    
+    .listing-wrapper span {
         padding: 2;
-        float:left;
+        float: left;
         line height: 1px;
-      }
-
-      li {
-      	font-size: 12px;
-      }
-  </style>
-
-  <template>
-    	<div class="user-panel">
-               <div class="pull-left image">
-                  <img src={{image_url}} alt="Thumb Image">
-               </div>
-               <div class="pull-left info">
-                  <li>{{name}}</li>
-                  <li>W:{{thumb_width}} &nbsp;&nbsp; H:{{thumb_height}}</li>
-               </div>
+    }
+    
+    li {
+        font-size: 12px;
+    }
+    </style>
+    <template>
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src={{image_url}} alt="Thumb Image">
             </div>
-        </div>  
-  </template>
-
+            <div class="pull-left info">
+                <li>{{name}}</li>
+                <li>W:{{thumb_width}} &nbsp;&nbsp; H:{{thumb_height}}</li>
+            </div>
+        </div>
+        </div>
+    </template>
+    
 </dom-module>
-
 <script>
-    Polymer({
-      is: 'image-set',
-      properties: {
+Polymer({
+    is: 'image-set',
+    properties: {
         name: String,
         image_url: String,
         whole_image_url: String
-      },
-      listeners: {
+    },
+    listeners: {
         'tap': 'regularTap',
         'special.tap': 'specialTap'
-      },
+    },
 
-      regularTap: function(e) {
+    regularTap: function(e) {
         //alert("image_set:"+this.whole_image_url);
         this.fire('image-click', {
             imgset_whole_image_url: this.whole_image_url
         });
-      },
+    },
 
-      specialTap: function(e) {
+    specialTap: function(e) {
         alert("It was special tapping");
-      }
-    });
+    }
+});
 </script>
