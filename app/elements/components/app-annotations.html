@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/akyral-details/akyral-details.html">
+<dom-module id="app-annotations">
+    <style>
+
+    </style>
+    <template>
+        <section class="section">
+            <button id="button" class="button__preview icon-lab">toggle details</button>
+        </section>
+        <akyral-details id="details">
+            <section class="section__review">
+                <h3>Details Content</h3>
+                <p>
+                    This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
+                </p>
+            </section>
+        </akyral-details>
+    </template>
+</dom-module>
+<script>
+Polymer({
+    is: 'app-annotations',
+
+    ready: function() {
+    
+    }
+ 
+});
+</script>
