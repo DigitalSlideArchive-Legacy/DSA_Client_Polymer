@@ -45,8 +45,14 @@
         //update_rater_overlays(image_name);  <<TO DOO!!!!
     this.dg_viewer.open(new_tile_source);
 */
-       var details = document.querySelector('#details');
-     details.target = document.querySelector('#button');
+     var layer = document.querySelector('#layer');
+     layer.target = document.querySelector('#layerBtn');
+     
+     var layerDetails = document.querySelector('#layerDetails');
+     layerDetails.target = document.querySelector('#layerDetailsBtn');
+     
+     var layerMarkups = document.querySelector('#layerMarkups');
+     layerMarkups.target = document.querySelector('#layerMarkupsBtn');
      
       },
       selectedImageToLoad: function(e) {

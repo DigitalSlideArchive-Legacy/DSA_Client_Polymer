@@ -4,17 +4,45 @@
 
     </style>
     <template>
-        <section class="section">
-            <button id="button" class="button__preview icon-lab">toggle details</button>
-        </section>
-        <akyral-details id="details">
-            <section class="section__review">
-                <h3>Details Content</h3>
-                <p>
-                    This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
-                </p>
+        <div>
+            <section class="section">
+                <button id="layerBtn" class="button__preview icon-lab">Layer</button>
             </section>
-        </akyral-details>
+            <akyral-details id="layer">
+                <section class="section__review">
+                    <h3>Details Content</h3>
+                    <p>
+                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
+                    </p>
+                </section>
+            </akyral-details>
+        </div>
+        <div>
+            <section class="section">
+                <button id="layerDetailsBtn" class="button__preview icon-lab">Layer Details</button>
+            </section>
+            <akyral-details id="layerDetails">
+                <section class="section__review">
+                    <h3>Details Content</h3>
+                    <p>
+                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
+                    </p>
+                </section>
+            </akyral-details>
+        </div>
+        <div>
+            <section class="section">
+                <button id="layerMarkupsBtn" class="button__preview icon-lab">Layer Markups</button>
+            </section>
+            <akyral-details id="layerMarkups">
+                <section class="section__review">
+                    <h3>Details Content</h3>
+                    <p>
+                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
+                    </p>
+                </section>
+            </akyral-details>
+        </div>
     </template>
 </dom-module>
 <script>
@@ -22,8 +50,17 @@ Polymer({
     is: 'app-annotations',
 
     ready: function() {
-    
-    }
- 
+        this.annSections = [{
+            btn_name: "toggle details 1",
+            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
+        }, {
+            btn_name: "toggle details 2",
+            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
+        }, {
+            btn_name: "toggle details 3",
+            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
+        }];
+    },
+
 });
 </script>
