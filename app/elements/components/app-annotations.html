@@ -1,47 +1,262 @@
 <link rel="import" href="../../bower_components/akyral-details/akyral-details.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/notification-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/places-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-error.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/polymer-color-picker/polymer-color-picker.html">
+<link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
 <dom-module id="app-annotations">
-    <style>
-
+    <style is="custom-style">
+    :host {
+        --paper-input-container-label: {
+            color: white;
+        };
+        --paper-input-container-underline-focus: {
+            background: white;
+        };
+        --paper-input-container-underline: {
+            background: white;
+        };
+    }
+    iron-icon.green {
+        /*  background-color: green;
+        --iron-icon-fill-color: white;
+        --iron-icon-stroke-color: red;
+        */
+        --iron-icon-fill-color: green;
+    }
+    
+    paper-button.custom {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+      specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+            background-color: var(--paper-pink-a200);
+            color: white !important;
+        }
+        ;
+        --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+        }
+        ;
+    }
+    
+    paper-button.custom:hover {
+        background-color: var(--paper-indigo-100);
+    }
+    
+    paper-button.pink {
+        color: var(--paper-pink-a200);
+    }
+    
+    paper-button.indigo {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+            background-color: var(--paper-pink-a200) !important;
+            color: white !important;
+        }
+        ;
+    }
+    
+    paper-button.green {
+        background-color: var(--paper-green-500);
+        color: white;
+    }
+    
+    paper-button.green[active] {
+        background-color: var(--paper-red-500);
+    }
+    
+    paper-button.disabled {
+        color: white;
+    }
+    
+    demo-snippet {
+        --demo-snippet-demo: {
+            background: var(--paper-grey-200);
+            padding: 8px;
+        }
+        ;
+        --demo-snippet-code: {
+            max-height: 300px;
+        }
+        ;
+    }
+    
+    paper-icon-button.white {
+        color: white;
+    }
+    
+    paper-card {
+        width: 100%;
+    }
+    
+    .horizontal {
+        @apply(--layout-horizontal);
+    }
+    
+    .justified {
+        @apply(--layout-justified);
+    }
+    
+    .amber {
+        background: var(--paper-amber-900);
+    }
+    
+    .lime {
+        background: var(--paper-lime-500);
+    }
+    
+    .cyan {
+        background: var(--paper-cyan-500);
+    }
+    
+    .dark {
+        background: var(--paper-blue-grey-500);
+    }
+    
+    .teal {
+        background: var(--paper-teal-500);
+    }
+    
+    paper-card.dark,
+    paper-card.amber,
+    paper-card.lime,
+    paper-card.cyan,
+    paper-card.teal {
+        color: white;
+        --paper-card-header-color: white;
+    }
+    
+    paper-checkbox {
+        display: block;
+        margin-bottom: 4px;
+        --paper-checkbox-label-color: white;
+        --paper-checkbox-unchecked-color: white;
+    }
+    
+    paper-icon-button {
+        color: var(--paper-grey-600);
+    }
+    
+    paper-icon-button.white {
+        color: white !important;
+    }
+    
+    div.notes {
+        @apply(--layout-vertical);
+        @apply(--layout-wrap);
+        width: 100%;
+        padding: 2px 2px 2px 2px;
+    }
+    
+    div.notes > paper-card {
+        box-sizing: border-box;
+        width: 98%;
+        margin: 2px;
+        flex: 0 0 auto;
+    }
     </style>
     <template>
-        <div>
-            <section class="section">
-                <button id="layerBtn" class="button__preview icon-lab">Layer</button>
-            </section>
-            <akyral-details id="layer">
-                <section class="section__review">
-                    <h3>Details Content</h3>
-                    <p>
-                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
-                    </p>
-                </section>
-            </akyral-details>
+        <div class="notes" align="center">
+            <paper-card class="cyan">
+                <div class="card-content">
+                    Layers
+                    <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggle()" style="float:right;">
+                    </paper-icon-button>
+                </div>
+                <div class="card-actions">
+                    <iron-collapse id="more-info" style="width:100%;">
+                        <paper-input label="Layer Name" id="inputWithButton">
+                            <iron-icon icon="maps:layers" prefix></iron-icon>
+                            <paper-icon-button suffix onclick="clearInput()" icon="add-circle-outline" alt="clear" title="clear">
+                            </paper-icon-button>
+                        </paper-input>
+                    </iron-collapse>
+                    <script>
+                    function _toggle() {
+                        var moreInfo = document.getElementById('more-info');
+                        var iconButton = Polymer.dom(event).localTarget;
+                        iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
+                        moreInfo.toggle();
+                    }
+                    </script>
+                </div>
+            </paper-card>
         </div>
-        <div>
-            <section class="section">
-                <button id="layerDetailsBtn" class="button__preview icon-lab">Layer Details</button>
-            </section>
-            <akyral-details id="layerDetails">
-                <section class="section__review">
-                    <h3>Details Content</h3>
-                    <p>
-                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
-                    </p>
-                </section>
-            </akyral-details>
+        <div class="notes" align="center">
+            <paper-card class="dark">
+                <div class="card-content">
+                    Layer Details
+                    <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggleDetails()" style="float:right;">
+                    </paper-icon-button>
+                </div>
+                <div class="card-actions">
+                    <iron-collapse id="more-info-details" style="width:100%;">
+                        <paper-input label="Name" id="layerName">
+                            <iron-icon icon="maps:layers" prefix></iron-icon>
+                        </paper-input>
+                        <paper-textarea label="Description"></paper-textarea>
+                        <paper-color-input label="Pick a color..." shape="square" type="hsl"></paper-color-input>
+                        <!--
+                       <polymer-color-picker></polymer-color-picker>
+                        <polymer-color-picker color="{{selectedColor}}"></polymer-color-picker>
+                    
+                    <polymer-color-picker column-count=5 color-list='["#65a5f2", "#83be54", "#f0d551", "#e5943c", "#a96ddb"]'></polymer-color-picker>
+                    -->
+                    </iron-collapse>
+                    <script>
+                    function _toggleDetails() {
+                        var moreInfo = document.getElementById('more-info-details');
+                        var iconButton = Polymer.dom(event).localTarget;
+                        iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
+                        moreInfo.toggle();
+                    }
+                    </script>
+                </div>
+            </paper-card>
         </div>
-        <div>
-            <section class="section">
-                <button id="layerMarkupsBtn" class="button__preview icon-lab">Layer Markups</button>
-            </section>
-            <akyral-details id="layerMarkups">
-                <section class="section__review">
-                    <h3>Details Content</h3>
-                    <p>
-                        This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element.
-                    </p>
-                </section>
-            </akyral-details>
+        <div class="notes" align="center">
+            <paper-card class="teal">
+                <div class="card-content">
+                    Layer Markups
+                    <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggleMarkups()" style="float:right;">
+                    </paper-icon-button>
+                </div>
+                <div class="card-actions">
+                    <iron-collapse id="more-info-markups" style="width:100%;">
+                        <paper-button>Apply to Markups</paper-button>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+                    </iron-collapse>
+                    <script>
+                    function _toggleMarkups() {
+                        var moreInfo = document.getElementById('more-info-markups');
+                        var iconButton = Polymer.dom(event).localTarget;
+                        iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
+                        moreInfo.toggle();
+                    }
+                    </script>
+                </div>
+            </paper-card>
         </div>
     </template>
 </dom-module>
