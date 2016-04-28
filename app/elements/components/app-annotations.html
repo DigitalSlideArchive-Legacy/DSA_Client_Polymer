@@ -26,14 +26,29 @@
     <style is="custom-style">
     :host {
         --paper-input-container-label: {
-            color: white;
+            color: var(--paper-amber-100);
         };
+        --paper-input-container-label-focus: {
+            color: var(--paper-amber-100);
+        }
         --paper-input-container-underline-focus: {
-            background: white;
+            background: var(--paper-orange-50);
         };
         --paper-input-container-underline: {
-            background: white;
+            background:var(--paper-orange-50);
         };
+    }
+    paper-input.my-class {
+        width: 80%;
+        --paper-input-container-input-color: var(--paper-amber-300);
+    }
+    paper-textarea.my-class {
+        width: 80%;
+        --paper-input-container-input-color: var(--paper-amber-300);
+    }
+    paper-color-input.my-class {
+        width: 80%;
+        --paper-input-container-input-color: var(--paper-amber-300);
     }
     iron-icon.green {
         /*  background-color: green;
@@ -42,7 +57,10 @@
         */
         --iron-icon-fill-color: green;
     }
-    
+    paper-color-input label {
+        color: black;
+    }
+
     paper-button.custom {
         --paper-button-ink-color: var(--paper-pink-a200);
         /* These could also be individually defined for each of the
@@ -135,7 +153,7 @@
     }
     
     .teal {
-        background: var(--paper-teal-500);
+        background: var(--paper-blue-grey-300);
     }
     
     paper-card.dark,
@@ -186,9 +204,9 @@
                 </div>
                 <div class="card-actions">
                     <iron-collapse id="more-info" style="width:100%;">
-                        <paper-input label="Layer Name" id="inputWithButton">
+                        <paper-input class="my-class" label="Layer Name" id="inputWithButton">
                             <iron-icon icon="maps:layers" prefix></iron-icon>
-                            <paper-icon-button suffix onclick="clearInput()" icon="add-circle-outline" alt="clear" title="clear">
+                            <paper-icon-button class="white" suffix onclick="clearInput()" icon="add-circle-outline" alt="clear" title="clear">
                             </paper-icon-button>
                         </paper-input>
                     </iron-collapse>
@@ -212,11 +230,15 @@
                 </div>
                 <div class="card-actions">
                     <iron-collapse id="more-info-details" style="width:100%;">
-                        <paper-input label="Name" id="layerName">
+                        <paper-input class="my-class" label="Name" id="layerName">
                             <iron-icon icon="maps:layers" prefix></iron-icon>
                         </paper-input>
-                        <paper-textarea label="Description"></paper-textarea>
-                        <paper-color-input label="Pick a color..." shape="square" type="hsl"></paper-color-input>
+                        <paper-textarea class="my-class" label="Description">
+                            <iron-icon icon="maps:layers" prefix></iron-icon>
+                        </paper-textarea>
+                        <paper-color-input class="my-class" value='{"red":12,"green":34,"blue":56}' with-description allow-alpha label="Pick a color..." type="hsl">
+                             <iron-icon icon="editor:format-color-fill" prefix></iron-icon>
+                        </paper-color-input>
                         <!--
                        <polymer-color-picker></polymer-color-picker>
                         <polymer-color-picker color="{{selectedColor}}"></polymer-color-picker>
