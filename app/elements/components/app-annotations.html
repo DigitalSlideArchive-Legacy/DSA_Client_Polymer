@@ -22,34 +22,43 @@
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/polymer-color-picker/polymer-color-picker.html">
 <link rel="import" href="../../bower_components/paper-color-picker/paper-color-input.html">
+<link rel="import" href="../../bower_components/leather-editable-list/leather-editable-list.html">
 <dom-module id="app-annotations">
     <style is="custom-style">
     :host {
         --paper-input-container-label: {
             color: var(--paper-amber-100);
-        };
+        }
+        ;
         --paper-input-container-label-focus: {
             color: var(--paper-amber-100);
         }
+        ;
         --paper-input-container-underline-focus: {
             background: var(--paper-orange-50);
-        };
+        }
+        ;
         --paper-input-container-underline: {
-            background:var(--paper-orange-50);
-        };
+            background: var(--paper-orange-50);
+        }
+        ;
     }
+    
     paper-input.my-class {
         width: 80%;
         --paper-input-container-input-color: var(--paper-amber-300);
     }
+    
     paper-textarea.my-class {
         width: 80%;
         --paper-input-container-input-color: var(--paper-amber-300);
     }
+    
     paper-color-input.my-class {
         width: 80%;
         --paper-input-container-input-color: var(--paper-amber-300);
     }
+    
     iron-icon.green {
         /*  background-color: green;
         --iron-icon-fill-color: white;
@@ -57,10 +66,11 @@
         */
         --iron-icon-fill-color: green;
     }
+    
     paper-color-input label {
         color: black;
     }
-
+    
     paper-button.custom {
         --paper-button-ink-color: var(--paper-pink-a200);
         /* These could also be individually defined for each of the
@@ -144,23 +154,30 @@
         background: var(--paper-lime-500);
     }
     
+    .light {
+        /*background: var(--paper-light-blue-500);*/
+        background: var(--paper-cyan-400);
+    }
+    
     .cyan {
         background: var(--paper-cyan-500);
     }
     
     .dark {
-        background: var(--paper-blue-grey-500);
+        /*background: var(--paper-light-blue-500);*/
+        background: var(--paper-cyan-600);
     }
     
-    .teal {
-        background: var(--paper-blue-grey-300);
+    .green {
+        background: var(--paper-green-500);
     }
     
     paper-card.dark,
     paper-card.amber,
     paper-card.lime,
     paper-card.cyan,
-    paper-card.teal {
+    paper-card.green,
+    paper-card.light {
         color: white;
         --paper-card-header-color: white;
     }
@@ -193,10 +210,14 @@
         margin: 2px;
         flex: 0 0 auto;
     }
+    
+    leather-editable-list {
+        width: 100%;
+    }
     </style>
     <template>
         <div class="notes" align="center">
-            <paper-card class="cyan">
+            <paper-card class="light">
                 <div class="card-content">
                     Layers
                     <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggle()" style="float:right;">
@@ -204,12 +225,30 @@
                 </div>
                 <div class="card-actions">
                     <iron-collapse id="more-info" style="width:100%;">
+                    <!--
                         <paper-input class="my-class" label="Layer Name" id="inputWithButton">
                             <iron-icon icon="maps:layers" prefix></iron-icon>
-                            <paper-icon-button class="white" suffix onclick="clearInput()" icon="add-circle-outline" alt="clear" title="clear">
+                            <paper-icon-button class="white" suffix onclick="addUser()" icon="add-circle-outline" alt="clear" title="clear">
                             </paper-icon-button>
                         </paper-input>
+                    -->    
+                        <div>
+                            <!--
+                            <leather-editable-list default="" items="{{someArray}}">
+                                <template>
+                                    <paper-input value="{{value}}" type="number"></paper-input>
+                                </template>
+                            </leather-editable-list>
+                            -->
+                            <leather-editable-list items="{{someArray}}" heading="Layers List">
+                                <paper-input add-row no-label-float></paper-input>
+                                <template>
+                                    <span>{{value}}</span>
+                                </template>
+                            </leather-editable-list>
+                        </div>
                     </iron-collapse>
+                    <!--<leather-editable-list items="[[layersArray]]"></leather-editable-list> -->
                     <script>
                     function _toggle() {
                         var moreInfo = document.getElementById('more-info');
@@ -222,7 +261,7 @@
             </paper-card>
         </div>
         <div class="notes" align="center">
-            <paper-card class="dark">
+            <paper-card class="cyan">
                 <div class="card-content">
                     Layer Details
                     <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggleDetails()" style="float:right;">
@@ -237,7 +276,7 @@
                             <iron-icon icon="maps:layers" prefix></iron-icon>
                         </paper-textarea>
                         <paper-color-input class="my-class" value='{"red":12,"green":34,"blue":56}' with-description allow-alpha label="Pick a color..." type="hsl">
-                             <iron-icon icon="editor:format-color-fill" prefix></iron-icon>
+                            <iron-icon icon="editor:format-color-fill" prefix></iron-icon>
                         </paper-color-input>
                         <!--
                        <polymer-color-picker></polymer-color-picker>
@@ -258,7 +297,7 @@
             </paper-card>
         </div>
         <div class="notes" align="center">
-            <paper-card class="teal">
+            <paper-card class="dark">
                 <div class="card-content">
                     Layer Markups
                     <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggleMarkups()" style="float:right;">
@@ -266,7 +305,6 @@
                 </div>
                 <div class="card-actions">
                     <iron-collapse id="more-info-markups" style="width:100%;">
-                        <paper-button>Apply to Markups</paper-button>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
                     </iron-collapse>
                     <script>
@@ -285,19 +323,11 @@
 <script>
 Polymer({
     is: 'app-annotations',
-
-    ready: function() {
-        this.annSections = [{
-            btn_name: "toggle details 1",
-            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
-        }, {
-            btn_name: "toggle details 2",
-            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
-        }, {
-            btn_name: "toggle details 3",
-            description: "This content was originally hidden, now it can be seen. Thus, is mysterious ways of the <code>akyral-details</code> element."
-        }];
-    },
-
+    properties: {
+        someArray: {
+            type: Array, // Available property types are String, Number, Boolean, Array, and Object
+            value: [1, 2] // Default value
+        }
+    }
 });
 </script>

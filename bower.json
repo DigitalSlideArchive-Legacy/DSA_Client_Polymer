@@ -10,7 +10,8 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "akyral-details": "^2.0.3",
     "polymer-color-picker": "^1.0.1",
-    "paper-color-picker": "^0.9.2"
+    "paper-color-picker": "^0.9.2",
+    "leather-editable-list": "^1.0.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
