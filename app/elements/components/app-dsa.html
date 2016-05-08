@@ -42,13 +42,14 @@
         viewer : Object
     },
      ready: function() {
-       /*
+       
        this.viewer = OpenSeadragon({
             id: "openseadragon1",
             prefixUrl: "images/openseadragon-bin-2.0.0/images/",
             showNavigator: true,
         });
-*/
+
+/*
        //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
 
        //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
@@ -83,6 +84,7 @@
      layerMarkups.target = document.querySelector('#layerMarkupsBtn');
 */     
 
+/*
   this.viewer = DSAViewer.getViewer();
   var annotationState = window.annotationState = new AnnotationState();
   annotationState.setSeadragonViewer(viewer);
@@ -100,8 +102,10 @@
       markupScope.add(annotationState.annotations[annotationState.annotations.length - 1]);
     });
   });
-
+*/
       },
+
+      
       selectedImageToLoad: function(e) {
 
         if(e.detail.workspace_whole_image_url)
