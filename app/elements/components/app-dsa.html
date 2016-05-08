@@ -1,3 +1,28 @@
+<!-- knockout is used by openseadragon image helper -->
+<script src="../../scripts/libs/knockout-3.0.0.js"></script>
+<script src="../../scripts/libs/openseadragon.min.js"></script>
+
+<!-- Used to add the scale bar to the openseadragon viewer -->
+<script src="../../scripts/libs/openseadragon-scalebar.js"></script>
+
+<!-- Used to get viewer properties such as zoom -->
+<script src="../../scripts/libs/openseadragon-imaginghelper.min.js"></script>
+<script src="../../scripts/libs/openseadragon-viewerinputhook.min.js"></script>
+
+<!-- Used for the cool on/off switch -->
+<script src="../../scripts/libs/bootstrap-switch.js"></script>
+
+<!-- Annotation scripts -->
+<script src="../../scripts/annotations/annotations.js"></script>
+<script src="../../scripts/annotations/annotationState_control_functions.js"></script>
+<script src="../../scripts/annotations/openseadragon_setup_functions.js"></script>
+<script src="../../scripts/annotations/bootstrap-switch.js"></script>
+<script src="../../scripts/annotations/mousetrap.min.js"></script>
+<script src="../../scripts/annotations/colornames_to_hex_hash.js"></script>
+
+<script src="../../scripts/annotations/dsa.js"></script>
+<script src="../../scripts/annotations/viewer.js"></script>
+<script src="../../scripts/libs/bootstrap-colorpicker-module.js"></script>
 
 <dom-module id="app-dsa">
    <style>
@@ -14,17 +39,19 @@
      is: 'app-dsa',
 
     properties: {
-        dg_viewer : Object
+        viewer : Object
     },
      ready: function() {
-       this.dg_viewer = OpenSeadragon({
+       /*
+       this.viewer = OpenSeadragon({
             id: "openseadragon1",
             prefixUrl: "images/openseadragon-bin-2.0.0/images/",
             showNavigator: true,
         });
-       //dg_viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
+*/
+       //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
 
-       //dg_viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
+       //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
 
 /*
       //https://isic-archive.com/api/v1/image/54e755f8bae47850e86ce012 
@@ -43,7 +70,7 @@
       //'height': image_metadata.meta.acquisition.pixelsY,
                 //'width': image_metadata.meta.acquisition.pixelsX,
         //update_rater_overlays(image_name);  <<TO DOO!!!!
-    this.dg_viewer.open(new_tile_source);
+    this.viewer.open(new_tile_source);
 */
 /*
      var layer = document.querySelector('#layer');
@@ -55,13 +82,32 @@
      var layerMarkups = document.querySelector('#layerMarkups');
      layerMarkups.target = document.querySelector('#layerMarkupsBtn');
 */     
+
+  this.viewer = DSAViewer.getViewer();
+  var annotationState = window.annotationState = new AnnotationState();
+  annotationState.setSeadragonViewer(viewer);
+  annotation_setup_code(annotationState);
+
+  //Layer andmarkup scope
+  var markupScope = angular.element(document.getElementById("markup_ng_controller")).scope();
+  var layerScope = angular.element(document.getElementById("layer_ng_controller")).scope();
+  var imageScope = angular.element(document.getElementById("image_ng_controller")).scope();
+
+  $(annotationState).on("annotationAdded", function(e) {
+    //Add new markup
+    //Use $apply, which will trigger, $digest and $watch to update all scope variables.
+    markupScope.$apply(function () {
+      markupScope.add(annotationState.annotations[annotationState.annotations.length - 1]);
+    });
+  });
+
       },
       selectedImageToLoad: function(e) {
 
         if(e.detail.workspace_whole_image_url)
         { 
           //alert("DSA: "+e.detail.workspace_whole_image_url);
-          this.dg_viewer.open(e.detail.workspace_whole_image_url);
+          this.viewer.open(e.detail.workspace_whole_image_url);
         }
       
      }

@@ -563,8 +563,8 @@ function get_image_data(image_uid) {
             }]
         }
         $(".boundaryClass").remove();
-        dg_viewer.clearOverlays();
-        dg_viewer.open(defaultimg_not_avail);;
+        viewer.clearOverlays();
+        viewer.open(defaultimg_not_avail);;
 
     });
 
@@ -587,7 +587,7 @@ function load_new_image_from_api(image_metadata) {
             }]
         }
         //update_rater_overlays(image_name);  <<TO DOO!!!!
-    dg_viewer.open(new_tile_source);
+    viewer.open(new_tile_source);
 
     //Now that the new image is loaded, should next load the actual markup data for this image
     //I should call this function when I select an image...
@@ -653,7 +653,7 @@ function get_segmentation_boundaries( img_segmentation_list)
                 //Since for now I am only going to bother rendering a single one, I may as well parse it now..
                 console.log(lesion_boundary_data.lesionBoundary);
                 //the geometry now contains the info I need to render it...
-                lesionboundary_to_svgshape( lesion_boundary_data, dg_viewer.viewport.contentSize.x);
+                lesionboundary_to_svgshape( lesion_boundary_data, viewer.viewport.contentSize.x);
 
 
                     //DAMN IT--- these x,y coordinates are taken from the original image, not the cropped image I think
@@ -678,7 +678,7 @@ function get_segmentation_superpixels( img_segmentation_list)
                 //Since for now I am only going to bother rendering a single one, I may as well parse it now..
                // console.log(lesion_boundary_data.lesionBoundary);
                 //the geometry now contains the info I need to render it...
-                lesionboundary_to_svgshape( lesion_boundary_data, dg_viewer.viewport.contentSize.x);
+                lesionboundary_to_svgshape( lesion_boundary_data, viewer.viewport.contentSize.x);
 
 
                     //DAMN IT--- these x,y coordinates are taken from the original image, not the cropped image I think

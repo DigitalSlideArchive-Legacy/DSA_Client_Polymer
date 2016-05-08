@@ -1,14 +1,72 @@
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/notification-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/places-icons.html">
+<link rel="import" href="../../bower_components/polymer-color-picker/polymer-color-picker.html">
 <dom-module id="app-header">
     <style is="custom-style">
     paper-button.green {
         height: 40px;
         background-color: var(--paper-green-500);
-        
         /*background-color: var(--paper-light-green-500);*/
         color: white;
+    }
+    
+    .flex-container {
+        display: -webkit-flex;
+        display: flex;
+        height: 45px;
+        -webkit-flex: 1;
+        flex: 1;
+    }
+    
+    paper-toggle-button.green {
+        --paper-toggle-button-checked-bar-color: var(--paper-green-500);
+        --paper-toggle-button-checked-button-color: var(--paper-green-500);
+        --paper-toggle-button-checked-ink-color: var(--paper-green-500);
+        --paper-toggle-button-unchecked-bar-color: var(--paper-grey-500);
+        --paper-toggle-button-unchecked-button-color: var(--paper-grey-500);
+        --paper-toggle-button-unchecked-ink-color: var(--paper-grey-500);
+    }
+    
+    paper-toggle-button.pink {
+        --paper-toggle-button-checked-bar-color: var(--paper-pink-500);
+        --paper-toggle-button-checked-button-color: var(--paper-pink-500);
+        --paper-toggle-button-checked-ink-color: var(--paper-pink-500);
+        --paper-toggle-button-unchecked-bar-color: var(--paper-indigo-900);
+        --paper-toggle-button-unchecked-button-color: var(--paper-indigo-900);
+        --paper-toggle-button-unchecked-ink-color: var(--paper-indigo-900);
+    }
+    
+    paper-tabs.transparent-teal {
+        width: 180px;
+        background-color: transparent;
+        color: #00bcd4;
+        box-shadow: none;
+    }
+    
+    paper-tabs.transparent-teal::shadow #selectionBar {
+        background-color: #00bcd4;
+    }
+    
+    paper-tabs.transparent-teal paper-tab::shadow #ink {
+        color: #00bcd4;
+    }
+    
+    polymer-color-picker.fancy {
+        --polymer-color-picker-color-size: 10px;
+        --polymer-color-picker-icon-size: 40px;
     }
     </style>
     <template>
@@ -29,6 +87,61 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
+                <div class="flex-container">
+                    <paper-tabs selected="0" class="transparent-teal" noink>
+                        <paper-tab>
+                            <iron-icon icon="image:crop-square"></iron-icon>
+                        </paper-tab>
+                        <paper-tab>
+                            <iron-icon icon="radio-button-unchecked"></iron-icon>
+                        </paper-tab>
+                        <paper-tab>
+                            <iron-icon icon="image:details"></iron-icon>
+                        </paper-tab>
+                        <paper-tab>
+                            <iron-icon icon="bookmark-border"></iron-icon>
+                        </paper-tab>
+                    </paper-tabs>
+                    <polymer-color-picker class="fancy"></polymer-color-picker>
+                    <paper-toggle-button class="green" checked>Draw</paper-toggle-button>
+                </div>
+                <!--
+                    <div id="image_viewer_toolbar" class="toolbar" style="height:35px">
+                    
+                        <div id="wsi_active_shape" class="btn-group drawing_shape" data-toggle="buttons-radio" style="float:left;margin-right:5px">
+                            <button id="circle" type="button" class="btn btn-primary osd_drawctrl">
+                                <img src="assets/img/drawicons/circle.png">
+                            </button>
+                            <button id="rect" type="button" class="btn btn-primary">
+                                <img src="assets/img/drawicons/square.png" />
+                            </button>
+                            <button id="polygon" type="button" class="btn btn-primary">
+                                <img src="assets/img/drawicons/polyline_v1.png" />
+                            </button>
+                            <button id="poi" type="button" class="btn btn-primary" style="height:35px">
+                                <img src="assets/img/drawicons/Pin1_Blue.png" />
+                            </button>
+                        </div>
+                        <div id="wsi_paint_color" class="btn-group paint_color" data-toggle="buttons-radio" style="float:left;margin-right:5px">
+                            <button id="red" type="button" class="btn btn-primary">
+                                <div style="border:10px solid red"></div>
+                            </button>
+                            <button id="green" type="button" class="btn btn-primary">
+                                <div style="border:10px solid green"></div>
+                            </button>
+                            <button id="blue" type="button" class="btn btn-primary">
+                                <div style="border:10px solid blue"></div>
+                            </button>
+                            <button id="yellow" type="button" class="btn btn-primary">
+                                <div style="border:10px solid yellow"></div>
+                            </button>
+                        </div>
+                        <div class="drawing_switch" data-on="danger" data-off="warning" style="float:left">
+                            <input type="checkbox">
+                        </div>
+                        <div style='float:left' id="image_id_display"></div>
+                    -->
+                <div id="image_viewer"></div>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
@@ -45,7 +158,7 @@
                                 <li class="footer">
                                     <div align="center">
                                         <paper-button raised class="green">
-                                            <iron-icon icon="save"  ></iron-icon>Save Layers and Markups</paper-button>
+                                            <iron-icon icon="save"></iron-icon>Save Layers and Markups</paper-button>
                                         <div>
                                 </li>
                             </ul>

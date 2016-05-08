@@ -212,19 +212,21 @@
     }
     
     leather-editable-list {
-        width: 100%;
+        flex: 1;
+        margin: 30px;
     }
+    
     </style>
     <template>
         <div class="notes" align="center">
             <paper-card class="light">
                 <div class="card-content">
                     Layers
-                    <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggle()" style="float:right;">
+                      <paper-icon-button class="white" icon="hardware:keyboard-arrow-up" title="more info" onclick="_toggle()" style="float:right;">
                     </paper-icon-button>
                 </div>
                 <div class="card-actions">
-                    <iron-collapse id="more-info" style="width:100%;">
+                    <iron-collapse id="more-info" style="display:flex; margin: 0px;">
                     <!--
                         <paper-input class="my-class" label="Layer Name" id="inputWithButton">
                             <iron-icon icon="maps:layers" prefix></iron-icon>
@@ -232,7 +234,7 @@
                             </paper-icon-button>
                         </paper-input>
                     -->    
-                        <div>
+                        <div style="display:flex">
                             <!--
                             <leather-editable-list default="" items="{{someArray}}">
                                 <template>
@@ -326,7 +328,7 @@ Polymer({
     properties: {
         someArray: {
             type: Array, // Available property types are String, Number, Boolean, Array, and Object
-            value: [1, 2] // Default value
+            value: [] // Default value
         }
     }
 });
