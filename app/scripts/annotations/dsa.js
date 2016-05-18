@@ -3,6 +3,7 @@ var layerScope;
 var imageScope;
 
 $(document).ready(function(){
+	
 	var viewer = DSAViewer.getViewer();
 	var annotationState = window.annotationState = new AnnotationState();
 	annotationState.setSeadragonViewer(viewer);

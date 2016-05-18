@@ -9,20 +9,14 @@
 <script src="../../scripts/libs/openseadragon-imaginghelper.min.js"></script>
 <script src="../../scripts/libs/openseadragon-viewerinputhook.min.js"></script>
 
-<!-- Used for the cool on/off switch -->
-<script src="../../scripts/libs/bootstrap-switch.js"></script>
-
 <!-- Annotation scripts -->
 <script src="../../scripts/annotations/annotations.js"></script>
 <script src="../../scripts/annotations/annotationState_control_functions.js"></script>
 <script src="../../scripts/annotations/openseadragon_setup_functions.js"></script>
-<script src="../../scripts/annotations/bootstrap-switch.js"></script>
 <script src="../../scripts/annotations/mousetrap.min.js"></script>
 <script src="../../scripts/annotations/colornames_to_hex_hash.js"></script>
 
-<script src="../../scripts/annotations/dsa.js"></script>
 <script src="../../scripts/annotations/viewer.js"></script>
-<script src="../../scripts/libs/bootstrap-colorpicker-module.js"></script>
 
 <dom-module id="app-dsa">
    <style>
@@ -42,7 +36,13 @@
         viewer : Object
     },
      ready: function() {
-       
+     
+       this.viewer = prepDSAViewer();
+       var annotationState = window.annotationState = new AnnotationState();
+       annotationState.setSeadragonViewer(this.viewer);
+       annotation_setup_code(annotationState);
+
+/*
        this.viewer = OpenSeadragon({
             id: "openseadragon1",
             prefixUrl: "images/openseadragon-bin-2.0.0/images/",
@@ -110,7 +110,7 @@
 
         if(e.detail.workspace_whole_image_url)
         { 
-          //alert("DSA: "+e.detail.workspace_whole_image_url);
+         // alert("DSA: "+e.detail.workspace_whole_image_url);
           this.viewer.open(e.detail.workspace_whole_image_url);
         }
       

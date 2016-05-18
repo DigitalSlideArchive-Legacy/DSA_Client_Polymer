@@ -138,7 +138,7 @@ $.extend(AnnotationStateToolbar.prototype, {
 			}
 		});
 
-		controls.drawingSwitch.bootstrapSwitch();
+		/*controls.drawingSwitch.bootstrapSwitch();
 		controls.drawingSwitch.on('switch-change', function (e, data) {
 			console.debug("switch-change caught by drawing switch element");
 			var $el = $(data.el), value = data.value;
@@ -147,6 +147,7 @@ $.extend(AnnotationStateToolbar.prototype, {
 				self.annotationState.setIsDrawing(!!data.value);
 			}
 		});
+		*/
 	},
 
 	/**
@@ -159,10 +160,12 @@ $.extend(AnnotationStateToolbar.prototype, {
 		$state.on('isDrawingChanged', function (evt) {
 			var drawingSwitch = self.controls.drawingSwitch;
 			var isDrawing = evt.isDrawing;
+			/*
 			if( drawingSwitch.bootstrapSwitch('status') !== isDrawing ) {
 				console.debug("annotation state caught isDrawingChanged event. Updating switch elements");
 				drawingSwitch.bootstrapSwitch('setState', isDrawing);
 			}
+			*/
 		});
 
 		this.syncState();
@@ -180,7 +183,9 @@ $.extend(AnnotationStateToolbar.prototype, {
 		if (!this.annotationState)
 			return;
 		var state = this.annotationState, ctl = this.controls;
+		/*
 		ctl.drawingSwitch.bootstrapSwitch('setState', state.isDrawing);
+		*/
 		this.controls.currentColor.css('background-color', state.lineColor);
 		this.controls.shapeButtons.removeClass('active');
 		$(this.element).find('#wsi_active_shape #' + state.drawMode).addClass('active');

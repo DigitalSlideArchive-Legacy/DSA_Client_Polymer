@@ -1,6 +1,4 @@
-var selectedImageId = null;
-
-var DSAViewer = (function() {
+function prepDSAViewer() {
     var appTitle = 'OpenSeadragon Imaging';
     var appDesc = 'OpenSeadragonImagingHelper / OpenSeadragonViewerInputHook Plugins';
 
@@ -33,29 +31,29 @@ var DSAViewer = (function() {
         _navExpanderCollapsedHeight = _$navExpanderHeaderContainer.outerHeight();
 
     var viewer = OpenSeadragon({
-			id: 'openseadragon1',
-			prefixUrl: "images/openseadragon-bin-2.0.0/images/",
-			navigatorPosition: "BOTTOM_RIGHT",
-			showNavigator: true
-		});
+            id: 'openseadragon1',
+            prefixUrl: "images/openseadragon-bin-2.0.0/images/",
+            navigatorPosition: "BOTTOM_RIGHT",
+            showNavigator: true
+        });
 
-	//$("#image_info").text(slides[0].id);  //TO DO:  Make this update with actual slide being shown!
+    //$("#image_info").text(slides[0].id);  //TO DO:  Make this update with actual slide being shown!
 
 
-	viewer.scalebar({
-			type: OpenSeadragon.ScalebarType.MAP,
-			pixelsPerMeter: 20,
-			minWidth: "75px",
-			location: OpenSeadragon.ScalebarLocation.BOTTOM_LEFT,
-			xOffset: 5,
-			yOffset: 10,
-			stayInsideImage: true,
-			color: "rgb(150, 150, 150)",
-			fontColor: "rgb(100, 100, 100)",
-			backgroundColor: "rgba(255, 255, 255, 0.5)",
-			fontSize: "small",
-			barThickness: 2
-		});
+    viewer.scalebar({
+            type: OpenSeadragon.ScalebarType.MAP,
+            pixelsPerMeter: 20,
+            minWidth: "75px",
+            location: OpenSeadragon.ScalebarLocation.BOTTOM_LEFT,
+            xOffset: 5,
+            yOffset: 10,
+            stayInsideImage: true,
+            color: "rgb(150, 150, 150)",
+            fontColor: "rgb(100, 100, 100)",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            fontSize: "small",
+            barThickness: 2
+        });
 
         imagingHelper = viewer.activateImagingHelper({onImageViewChanged: onImageViewChanged}),
         viewerInputHook = viewer.addViewerInputHook({hooks: [
@@ -66,10 +64,10 @@ var DSAViewer = (function() {
         _$osdCanvas = null,
         _$svgOverlay = $('.imgvwrSVG');
 
-	//load the slide thumbnails
-	//selectedImageId = slides[0].id;
-	//$("#image_id_display").html()
-	
+    //load the slide thumbnails
+    //selectedImageId = slides[0].id;
+    //$("#image_id_display").html()
+    
 
     // Example SVG annotation overlay.  We use these observables to keep the example annotation sync'd with the image zoom/pan
     var annoGroupTranslateX = ko.observable(0.0),
@@ -80,6 +78,7 @@ var DSAViewer = (function() {
         }, this);
 
     viewer.addHandler('open', function (event) {
+        //alert("OPEN VIEWER");
         _$osdCanvas = $(viewer.canvas);
         setMinMaxZoomForImage();
         outputVM.haveImage(true);
@@ -114,6 +113,7 @@ var DSAViewer = (function() {
     });
 
     viewer.addHandler('close', function (event) {
+       /* alert("CLOSE VIEWER");
         _$navExpander.css( 'visibility', 'hidden');
         _$svgOverlay.css( 'visibility', 'hidden');
         outputVM.haveImage(false);
@@ -121,6 +121,7 @@ var DSAViewer = (function() {
         _$osdCanvas.off('mousemove.osdimaginghelper', onOsdCanvasMouseMove);
         _$osdCanvas.off('mouseleave.osdimaginghelper', onOsdCanvasMouseLeave);
         _$osdCanvas = null;
+        */
     });
 
     viewer.addHandler('navigator-scroll', function (event) {
@@ -489,9 +490,5 @@ var DSAViewer = (function() {
 
     ko.applyBindings(vm);
 
-	return{
-		getViewer: function (){return viewer;},
-		outputVM: outputVM
-	}
-
-});
+    return viewer;
+};
