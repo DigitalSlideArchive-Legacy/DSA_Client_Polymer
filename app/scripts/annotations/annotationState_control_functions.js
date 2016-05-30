@@ -82,6 +82,8 @@ $.extend(AnnotationStateControl.prototype, {
 });
 
 
+
+
 function AnnotationStateToolbar(opts) {
 	this._init(opts);
 }
@@ -116,9 +118,10 @@ $.extend(AnnotationStateToolbar.prototype, {
 			colorButtons:  $el.find('#wsi_paint_color button'),
 			currentColor:  $el.find('#cur_color'),
 			shapeButtons:  $el.find('#wsi_active_shape button'),
-			drawingSwitch: $el.find('.drawing_switch')
+			drawingSwitch: $el.find('#drawing_switch')
 		};
 
+/*
 		controls.colorButtons.on('click', function (evt) {
 			controls.colorButtons.removeClass('active');
 			$(this).addClass('active');
@@ -129,7 +132,6 @@ $.extend(AnnotationStateToolbar.prototype, {
 			controls.currentColor.css('background-color', hexColor);
 		});
 
-		
 		controls.shapeButtons.on('click', function (evt) {
 			controls.shapeButtons.removeClass('active');
 			$(this).addClass('active');
@@ -138,7 +140,8 @@ $.extend(AnnotationStateToolbar.prototype, {
 			}
 		});
 
-		/*controls.drawingSwitch.bootstrapSwitch();
+
+		controls.drawingSwitch.bootstrapSwitch();
 		controls.drawingSwitch.on('switch-change', function (e, data) {
 			console.debug("switch-change caught by drawing switch element");
 			var $el = $(data.el), value = data.value;
@@ -157,9 +160,15 @@ $.extend(AnnotationStateToolbar.prototype, {
 		var self = this;
 		this.annotationState = annotationState;
 		var $state = $(annotationState);
+
 		$state.on('isDrawingChanged', function (evt) {
 			var drawingSwitch = self.controls.drawingSwitch;
 			var isDrawing = evt.isDrawing;
+
+			if( drawingSwitch.checked !== isDrawing ) {
+				console.debug("annotation state caught isDrawingChanged event. Updating switch elements");
+				drawingSwitch.checked = isDrawing;
+			}
 			/*
 			if( drawingSwitch.bootstrapSwitch('status') !== isDrawing ) {
 				console.debug("annotation state caught isDrawingChanged event. Updating switch elements");
@@ -183,6 +192,7 @@ $.extend(AnnotationStateToolbar.prototype, {
 		if (!this.annotationState)
 			return;
 		var state = this.annotationState, ctl = this.controls;
+		ctl.drawingSwitch.checked = state.isDrawing;
 		/*
 		ctl.drawingSwitch.bootstrapSwitch('setState', state.isDrawing);
 		*/
@@ -220,9 +230,7 @@ function get_url_for_poi_image(pin_color) {
 }
 
 function annotation_setup_code(annotationState) {
-
 	annotationToolbar = new AnnotationStateToolbar({
-
 	});
 	annotationToolbar.attachState(annotationState);
 

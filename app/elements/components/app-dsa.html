@@ -22,7 +22,7 @@
    <style>
    </style>
    <template>
-   	  <app-header></app-header>
+   	  <app-header on-color-change=updateColor on-draw-mode-changed=drawModeChanged on-shape-changed=shapeModeChanged></app-header>
    	  <app-workspace on-image-click = selectedImageToLoad></app-workspace>
 	     <app-footer></app-footer>
 	     <app-controlsidebar></app-controlsidebar>
@@ -41,6 +41,10 @@
        var annotationState = window.annotationState = new AnnotationState();
        annotationState.setSeadragonViewer(this.viewer);
        annotation_setup_code(annotationState);
+
+       annotationState.setDrawMode('rect');
+      annotationState.setIsDrawing(false);
+
 
 /*
        this.viewer = OpenSeadragon({
@@ -114,7 +118,39 @@
           this.viewer.open(e.detail.workspace_whole_image_url);
         }
       
-     }
+     },
 
+     updateColor: function(e) {
+        if(e.detail.drawing_color)
+        { 
+          annotationState.lineColor = e.detail.drawing_color;
+        }    
+     },
+
+     drawModeChanged: function(e) {
+          annotationState.setIsDrawing(e.detail.draw_mode);   
+     },
+
+     shapeModeChanged : function(e){
+
+      switch(e.detail.shape_mode) {
+          case 0: 
+            annotationState.setDrawMode('rect');
+          break;
+
+          case 1: 
+          annotationState.setDrawMode('circle');
+          break;
+
+          case 2:
+          annotationState.setDrawMode('polygon');
+          break;
+
+          case 3: 
+          annotationState.setDrawMode('poi');
+          break;
+
+      }
+     }
    });
 </script>
