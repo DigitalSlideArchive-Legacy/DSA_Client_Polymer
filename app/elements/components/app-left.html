@@ -35,8 +35,9 @@
         DSA LINK: http://cancer.digitalslidearchive.emory.edu/api/v2/collections
         DSA IMAGESETS LINK : http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides/lgg
         ISIC LINK: https://isic-archive.com/api/v1/study
+        http://cancer.digitalslidearchive.emory.edu/api/v2/collections
       -->
-        <iron-ajax auto url="http://cancer.digitalslidearchive.emory.edu/api/v2/collections" handle-as="json" last-response="{{datasets}}"></iron-ajax>
+        <iron-ajax auto url="http://adrcdev.digitalslidearchive.emory.edu/api/wbx/slideSet" handle-as="json" last-response="{{datasets}}"></iron-ajax>
         <!-- <iron-ajax
          auto
          url="https://isic-archive.com/api/v1/study/55c405419fc3c151ac90bfb6/images/"
@@ -65,7 +66,7 @@
                         <paper-dropdown-menu label="Data Set">
                             <paper-listbox class="dropdown-content" selected="{{studyIDidx}}">
                                 <template is="dom-repeat" items="[[datasets]]" as="dataset">
-                                    <paper-item value="{{dataset._id}}">{{dataset.collection_name}}</paper-item>
+                                    <paper-item value="{{dataset.id}}">{{dataset.id}}</paper-item>
                                 </template>
                             </paper-listbox>
                         </paper-dropdown-menu>
@@ -83,7 +84,7 @@
                     </li>
                     <li style="width: 100%; height:100%; overflow: scroll;">
                         <template is="dom-repeat" items="{{imagesets}}" filter="{{_filter(filterVal)}}">
-                            <image-set name="{{item.slide_name}}" image_url="{{item.thumbnail_image}}" thumb_width="{{item.image_width}}" thumb_height="{{item.image_height}}" whole_image_url="{{item.slide_url}}" 
+                            <image-set name="{{item.slide_name}}" image_url="http://adrcdev.digitalslidearchive.emory.edu/{{item.thumbnail_image}}" thumb_width="{{item.width}}" thumb_height="{{item.height}}" whole_image_url="http://adrcdev.digitalslidearchive.emory.edu{{item.iip_slide_w_path}}" 
                             on-image-click=selectedImageToLoad>
                             </image-set>
                         </template>
@@ -113,15 +114,15 @@ Polymer({
         if (studyIDidx >= 0) {
             var dataset = this.datasets[studyIDidx];
             //console.log(['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/'));
-            return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides', dataset.collection_id].join('/');
+            return ['http://adrcdev.digitalslidearchive.emory.edu/api/wbx/slideSet', dataset.id].join('/');
             //return ['https://isic-archive.com/api/v1/study', dataset._id,'images/'].join('/');
         }
-        return ['http://cancer.digitalslidearchive.emory.edu/api/v2/collections/slides'].join('/');
+        return ['http://adrcdev.digitalslidearchive.emory.edu/api/wbx/slideSet'].join('/');
         //return ['https://isic-archive.com/api/v1/study', '','images/'].join('/');
     },
 
     selectedImageToLoad: function(e) {
-        //alert("app_left:"+e.detail.imgset_whole_image_url);
+        alert("app_left:"+e.detail.imgset_whole_image_url);
         this.fire('image-click', {
             appleft_whole_image_url: e.detail.imgset_whole_image_url
         });
