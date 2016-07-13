@@ -1046,11 +1046,14 @@ $.extend(AnnotationState.prototype, {
 			annotation.data['index'] = 0;
 		this.annotations.push(annotation);
 		console.log("added annotation %o", annotation);
+
 		$(this).trigger({
 			type: 'annotationAdded',
 			annotation: annotation,
 			index: this.annotations.length - 1
 		});
+
+		console.log("END ");
 	},
 	
 	/**

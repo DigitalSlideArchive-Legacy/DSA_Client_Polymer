@@ -220,11 +220,11 @@ function toggle_roi_properties(roi_index, roi_property, prop_value, annotationSt
 
 function get_url_for_poi_image(pin_color) {
 	if (pin_color == 'FF0000' || pin_color == 'red') {
-		pin_image_src = "drawing_icons/Pin1_Red.png";
+		pin_image_src = "images/Pin1_Red.png";
 	} else if (pin_color == '00FF00' || pin_color == 'green') {
-		pin_image_src = "drawing_icons/Pin1_Green.png";
+		pin_image_src = "images/Pin1_Green.png";
 	} else {
-		pin_image_src = "drawing_icons/Pin1_Blue.png";
+		pin_image_src = "images/Pin1_Blue.png";
 	}
 	return (pin_image_src);
 }

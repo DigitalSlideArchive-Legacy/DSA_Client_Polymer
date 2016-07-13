@@ -1,7 +1,6 @@
 <!-- knockout is used by openseadragon image helper -->
 <script src="../../scripts/libs/knockout-3.0.0.js"></script>
 <script src="../../scripts/libs/openseadragon.min.js"></script>
-
 <!-- Used to add the scale bar to the openseadragon viewer -->
 <script src="../../scripts/libs/openseadragon-scalebar.js"></script>
 
@@ -33,9 +32,14 @@
      is: 'app-dsa',
 
     properties: {
-        viewer : Object
+        viewer : Object,
+        
     },
-     ready: function() {
+    
+      _onHostHover: function(e){
+        console.debug('hover');  
+      },
+    ready: function() {
      
        this.viewer = prepDSAViewer();
        var annotationState = window.annotationState = new AnnotationState();
@@ -43,75 +47,16 @@
        annotation_setup_code(annotationState);
 
        annotationState.setDrawMode('rect');
-      annotationState.setIsDrawing(false);
+       annotationState.setIsDrawing(false);
 
-
-/*
-       this.viewer = OpenSeadragon({
-            id: "openseadragon1",
-            prefixUrl: "images/openseadragon-bin-2.0.0/images/",
-            showNavigator: true,
-        });
-
-/*
-       //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
-
-       //viewer.open("http://node15.cci.emory.edu/cgi-bin/iipsrv.fcgi?DeepZoom=/PYRAMIDS/PYRAMIDS/CDSA/GBM_Frozen/intgen.org_GBM.tissue_images.3.0.0/TCGA-06-0137-01A-01-BS1.svs.dzi.tif.dzi");
-
-/*
-      //https://isic-archive.com/api/v1/image/54e755f8bae47850e86ce012 
-      isic_image = 'https://isic-archive.com/api/v1/image/54e755f8bae47850e86ce012'
-      base_url = `https://isic-archive.com/api/v1/image/${isic_image}/`;
-      image_filename_url = base_url + 'download?contentDisposition=inline&.jpg' //Please note this hack, without the .jpg osd couldn't read
-
-        new_tile_source = {
-            'type': 'legacy-image-pyramid',
-            levels: [{
-                'url': image_filename_url,
-                'height':3872, 'width':2592
-            }]
-        }
-        
-      //'height': image_metadata.meta.acquisition.pixelsY,
-                //'width': image_metadata.meta.acquisition.pixelsX,
-        //update_rater_overlays(image_name);  <<TO DOO!!!!
-    this.viewer.open(new_tile_source);
-*/
-/*
-     var layer = document.querySelector('#layer');
-     layer.target = document.querySelector('#layerBtn');
-     
-     var layerDetails = document.querySelector('#layerDetails');
-     layerDetails.target = document.querySelector('#layerDetailsBtn');
-     
-     var layerMarkups = document.querySelector('#layerMarkups');
-     layerMarkups.target = document.querySelector('#layerMarkupsBtn');
-*/     
-
-/*
-  this.viewer = DSAViewer.getViewer();
-  var annotationState = window.annotationState = new AnnotationState();
-  annotationState.setSeadragonViewer(viewer);
-  annotation_setup_code(annotationState);
-
-  //Layer andmarkup scope
-  var markupScope = angular.element(document.getElementById("markup_ng_controller")).scope();
-  var layerScope = angular.element(document.getElementById("layer_ng_controller")).scope();
-  var imageScope = angular.element(document.getElementById("image_ng_controller")).scope();
-
-  $(annotationState).on("annotationAdded", function(e) {
-    //Add new markup
-    //Use $apply, which will trigger, $digest and $watch to update all scope variables.
-    markupScope.$apply(function () {
-      markupScope.add(annotationState.annotations[annotationState.annotations.length - 1]);
-    });
-  });
-*/
       },
+      attached: function() {
 
-      
+        $(annotationState).on("annotationAdded", function(e){ 
+          alert(annotationState.annotations[annotationState.annotations.length - 1]);
+        })
+      },
       selectedImageToLoad: function(e) {
-
         if(e.detail.workspace_whole_image_url)
         { 
           //alert("DSA: "+e.detail.workspace_whole_image_url);
@@ -153,4 +98,5 @@
       }
      }
    });
+
 </script>
