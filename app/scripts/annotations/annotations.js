@@ -1052,8 +1052,6 @@ $.extend(AnnotationState.prototype, {
 			annotation: annotation,
 			index: this.annotations.length - 1
 		});
-
-		console.log("END ");
 	},
 	
 	/**

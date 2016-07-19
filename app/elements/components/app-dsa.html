@@ -3,100 +3,125 @@
 <script src="../../scripts/libs/openseadragon.min.js"></script>
 <!-- Used to add the scale bar to the openseadragon viewer -->
 <script src="../../scripts/libs/openseadragon-scalebar.js"></script>
-
 <!-- Used to get viewer properties such as zoom -->
 <script src="../../scripts/libs/openseadragon-imaginghelper.min.js"></script>
 <script src="../../scripts/libs/openseadragon-viewerinputhook.min.js"></script>
-
 <!-- Annotation scripts -->
 <script src="../../scripts/annotations/annotations.js"></script>
 <script src="../../scripts/annotations/annotationState_control_functions.js"></script>
 <script src="../../scripts/annotations/openseadragon_setup_functions.js"></script>
 <script src="../../scripts/annotations/mousetrap.min.js"></script>
 <script src="../../scripts/annotations/colornames_to_hex_hash.js"></script>
-
 <script src="../../scripts/annotations/viewer.js"></script>
-
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <dom-module id="app-dsa">
-   <style>
-   </style>
-   <template>
-   	  <app-header on-color-change=updateColor on-draw-mode-changed=drawModeChanged on-shape-changed=shapeModeChanged></app-header>
-   	  <app-workspace on-image-click = selectedImageToLoad></app-workspace>
-	     <app-footer></app-footer>
-	     <app-controlsidebar></app-controlsidebar>
-   </template>
+    <style>
+
+    </style>
+    <template>
+        <iron-ajax id="ajax" handle-as="json" content-type="application/json" method="POST" body='{"user":2,"dob":"2015-06-10","jobs":1,"skills":[],"about":"cool"}' on-response="hresponse" debounce-duration="3000">
+        </iron-ajax>
+        <app-header on-color-change=updateColor on-draw-mode-changed=drawModeChanged on-shape-changed=shapeModeChanged></app-header>
+        <app-workspace on-image-click=selectedImageToLoad></app-workspace>
+        <app-footer></app-footer>
+        <app-controlsidebar></app-controlsidebar>
+    </template>
 </dom-module>
 <script>
-   Polymer({
-     is: 'app-dsa',
+Polymer({
+    is: 'app-dsa',
 
     properties: {
-        viewer : Object,
-        
+        viewer: Object,
+
     },
-    
-      _onHostHover: function(e){
-        console.debug('hover');  
-      },
     ready: function() {
-     
-       this.viewer = prepDSAViewer();
-       var annotationState = window.annotationState = new AnnotationState();
-       annotationState.setSeadragonViewer(this.viewer);
-       annotation_setup_code(annotationState);
 
-       annotationState.setDrawMode('rect');
-       annotationState.setIsDrawing(false);
+        this.viewer = prepDSAViewer();
+        var annotationState = window.annotationState = new AnnotationState();
+        annotationState.setSeadragonViewer(this.viewer);
+        annotation_setup_code(annotationState);
 
-      },
-      attached: function() {
+        annotationState.setDrawMode('rect');
+        annotationState.setIsDrawing(false);
 
-        $(annotationState).on("annotationAdded", function(e){ 
-          alert(annotationState.annotations[annotationState.annotations.length - 1]);
+    },
+    attached: function() {
+
+        $(annotationState).on("annotationAdded", function(e) {
+            var annObj = annotationState.annotations[annotationState.annotations.length - 1].data;
+            if (annObj.type === "rect") {
+                console.log("Handle: " + annObj.type)
+
+            } else if (annObj.type === "circle") {
+                console.log("Handle: " + annObj.type)
+
+            } else if (annObj.type === "polygon") {
+                console.log("Handle: " + annObj.type)
+
+            } else if (annObj.type === "poi") {
+                console.log("Handle: " + annObj.type)
+
+            }
+            this.$.ajax.url = "http://127.0.0.1:8000/users/";
+
+            his.$.ajax.body = JSON.stringify({
+                "user": 2,
+                "dob": "2015-06-10",
+                "jobs": 1,
+                "skills": [],
+                "about": "cool"
+            });
+            ajax.generateRequest();
+            //alert(annotationState.annotations[annotationState.annotations.length - 1].data.type);
+            //alert(e.annotation.type);
+            // http://localhost:3000/api/shapes
         })
-      },
-      selectedImageToLoad: function(e) {
-        if(e.detail.workspace_whole_image_url)
-        { 
-          //alert("DSA: "+e.detail.workspace_whole_image_url);
-          this.viewer.open(e.detail.workspace_whole_image_url);
+    },
+    selectedImageToLoad: function(e) {
+        if (e.detail.workspace_whole_image_url) {
+            //alert("DSA: "+e.detail.workspace_whole_image_url);
+            this.viewer.open(e.detail.workspace_whole_image_url);
         }
-      
-     },
 
-     updateColor: function(e) {
-        if(e.detail.drawing_color)
-        { 
-          annotationState.lineColor = e.detail.drawing_color;
-        }    
-     },
+    },
 
-     drawModeChanged: function(e) {
-          annotationState.setIsDrawing(e.detail.draw_mode);   
-     },
+    updateColor: function(e) {
+        if (e.detail.drawing_color) {
+            annotationState.lineColor = e.detail.drawing_color;
+        }
+    },
 
-     shapeModeChanged : function(e){
+    drawModeChanged: function(e) {
+        annotationState.setIsDrawing(e.detail.draw_mode);
+    },
 
-      switch(e.detail.shape_mode) {
-          case 0: 
-            annotationState.setDrawMode('rect');
-          break;
+    shapeModeChanged: function(e) {
 
-          case 1: 
-          annotationState.setDrawMode('circle');
-          break;
+        switch (e.detail.shape_mode) {
+            case 0:
+                annotationState.setDrawMode('rect');
+                break;
 
-          case 2:
-          annotationState.setDrawMode('polygon');
-          break;
+            case 1:
+                annotationState.setDrawMode('circle');
+                break;
 
-          case 3: 
-          annotationState.setDrawMode('poi');
-          break;
+            case 2:
+                annotationState.setDrawMode('polygon');
+                break;
 
-      }
-     }
-   });
+            case 3:
+                annotationState.setDrawMode('poi');
+                break;
 
+        }
+    },
+    hresponse: function(request) {
+        console.log(request.detail.response);
+        console.log(this.$.ajax.lastResponse);
+        console.log(this.$.ajax.params);
+    }
+});
 </script>
